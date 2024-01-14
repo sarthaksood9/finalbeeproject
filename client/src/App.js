@@ -11,10 +11,11 @@ import TeacherRoutes from './Routes/TeacherRoutes';
 
 function App() {
   let { user } = useStore(state => state);
+  console.log(user)
   return (
     <div className="App">
       <Routes>
-        <Route path='/*' element={user.role==="student"?<StudentsRoutes/>:<TeacherRoutes/>} />
+        {user && <Route path='/*' element={user.role==="student"?<StudentsRoutes/>:<TeacherRoutes/>} />}
       <Route path='/re' element={<Registration/>}/>
       </Routes>
       <Toaster />

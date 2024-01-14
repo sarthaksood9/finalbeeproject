@@ -6,6 +6,8 @@ const StudentsRoutes = () => {
   return (
     <Routes>
         <Route path='/' element={<Student/>}/>
+
+        
     </Routes>
   )
 }

@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import axios from "axios"
 import toast from 'react-hot-toast';
-import {useStore} from "../zustand/userstand.js"
+import { useStore } from "../zustand/userstand.js"
 import { useNavigate } from 'react-router-dom';
 
 
 
 export const SignUp = () => {
 
-    const user=useStore((state) => state)
+    const user = useStore((state) => state)
     console.log(user)
     const [name, setFirstName] = useState("");
     const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ export const SignUp = () => {
     const [role, setRole] = useState("teacher");
     const [loader, setLoader] = useState(false);
 
-    const navigate =useNavigate();
+    const navigate = useNavigate();
 
 
     const hendleEmailCheck = async (email) => {
@@ -43,16 +43,16 @@ export const SignUp = () => {
 
         if (!check) {
             var obj = { name, email, password, role };
-            axios.post("http://localhost:4000/signup", obj,{
-                withCredentials:true
+            axios.post("http://localhost:4000/signup", obj, {
+                withCredentials: true
             })
-                .then((req,res) => {
+                .then((req, res) => {
                     console.log("data sent")
                     user.setUser(req.data.users);
                     navigate("/");
 
-    
-                    
+
+
                 })
                 .catch((e) => {
                     console.log(e);
@@ -61,10 +61,10 @@ export const SignUp = () => {
         else {
             console.log("email already exist");
             toast.error("email exist");
-            
+
         }
 
-        
+
 
 
 
@@ -108,7 +108,29 @@ export const SignUp = () => {
 export const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    return (
+    const [loader, setLoader] = useState("");
+
+    const user = useStore((state) => state)
+    const navigate = useNavigate();
+    console.log(user);
+
+
+
+
+    const hendleLogin = (email, password) => {
+        var obj = { email, password }
+        axios.post("http://localhost:4000/api/login", obj)
+            .then((req) => {
+                console.log("logedIn")
+                user.setUser(req.data.user);
+                navigate("/");
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+        }
+        console.log(user);
+        return (
         <div className='py-[2rem] px-[4rem] flex flex-col items-center gap-5 pb-[3rem] '>
             <div className='text-[2.9rem] font-[500]'>
                 <h1>Create your account.</h1>
@@ -126,7 +148,7 @@ export const SignIn = () => {
 
 
 
-                <button className='w-[80%] self-center py-2 text-white border-[2px] rounded-xl bg-[#4f49c7]'>Sign In</button>
+                <button onClick={() => { hendleLogin(email, password) }} className='w-[80%] self-center py-2 text-white border-[2px] rounded-xl bg-[#4f49c7]'>Sign In</button>
 
 
             </div>
