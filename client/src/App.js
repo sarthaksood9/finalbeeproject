@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom"
 import { useStore } from "./zustand/userstand.js"
 import StudentsRoutes from './Routes/Studentroutes';
 import TeacherRoutes from './Routes/TeacherRoutes';
+import NavBar from './components/NavBar';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   console.log(user)
   return (
     <div className="App">
+      <NavBar/>
       <Routes>
         {user && <Route path='/*' element={user.role==="student"?<StudentsRoutes/>:<TeacherRoutes/>} />}
       <Route path='/re' element={<Registration/>}/>
