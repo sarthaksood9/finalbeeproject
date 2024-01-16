@@ -3,8 +3,11 @@ import ReactPlayer from "react-player"
 import { useSocket } from '../context/SocketProvider'
 
 import peer from "../services/peer"
+import { useStore } from '../zustand/userstand'
 
 const Room = () => {
+  const user=useStore(state=> state);
+  console.log(user.user.role);
   const socket = useSocket();
   const [remoteSocketid, setRemoteSocketid] = useState();
   const [myStream, setMyStream] = useState();
@@ -13,6 +16,7 @@ const Room = () => {
 
   const hendleUserJoined = useCallback(({ email, id }) => {
     console.log(`Email ${email} joined room`);
+    setIncomming(email);
     setRemoteSocketid(id);
   })
 
@@ -114,7 +118,7 @@ const Room = () => {
   return (
     <>
       <div>Room</div>
-      {remoteSocketid ? <div>connected</div> : <div>no user</div>}
+      {remoteSocketid ? <div>{incomming} is available for the call</div> : <div>No {user.user.role==="teacher"?<span>student</span>:<span>teacher</span>} is Available</div>}
       {myStream && <button className='bg-blue-400 px-4 py-1 text-white rounded-2xl' onClick={sendStreams}>connect</button>}
       {remoteSocketid && <button className='bg-blue-400 px-4 py-1 text-white rounded-2xl' onClick={hendleCallUser}>call</button>}
       {myStream && <ReactPlayer playing muted width="500px" height="300px" url={myStream}></ReactPlayer>}

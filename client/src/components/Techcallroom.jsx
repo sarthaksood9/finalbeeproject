@@ -52,7 +52,7 @@ const Techcallroom = () => {
                 {/* Add UI elements for hang up, mute, etc., buttons as needed */}
                 {/* For example, hang-up button */}
                 <button onClick={hendleSubmit} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">
-                    Hang Up
+                    Initialize a Call
                 </button>
             </div>
         </div>
